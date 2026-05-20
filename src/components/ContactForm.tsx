@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Icon } from "./Icon";
 import { products } from "@/lib/data";

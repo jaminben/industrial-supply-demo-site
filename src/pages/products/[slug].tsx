@@ -1,43 +1,33 @@
-import type { Metadata } from "next";
+import type { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { Container, Button } from "@/components/ui";
+import { Seo } from "@/components/Seo";
 import { Icon } from "@/components/Icon";
 import { CtaBand } from "@/components/sections";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { products, getProduct, getIndustry } from "@/lib/data";
 import { img } from "@/lib/images";
 
-export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
-}
+export const getStaticPaths: GetStaticPaths = () => ({
+  paths: products.map((p) => ({ params: { slug: p.slug } })),
+  fallback: false,
+});
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const product = getProduct(slug);
-  if (!product) return { title: "Product not found" };
-  return { title: product.name, description: product.summary };
-}
+export const getStaticProps: GetStaticProps<{ slug: string }> = ({ params }) => {
+  const slug = params?.slug as string;
+  if (!getProduct(slug)) return { notFound: true };
+  return { props: { slug } };
+};
 
-export default async function ProductDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const product = getProduct(slug);
-  if (!product) notFound();
-
+export default function ProductDetailPage({ slug }: { slug: string }) {
+  const product = getProduct(slug)!;
   const related = products.filter((p) => p.slug !== product.slug).slice(0, 3);
   const segments = product.segments.map(getIndustry).filter(Boolean);
 
   return (
     <>
+      <Seo title={product.name} description={product.summary} />
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-ink text-white">
         <Image src={img[product.image]} alt="" fill priority sizes="100vw" className="object-cover opacity-25" />

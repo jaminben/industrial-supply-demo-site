@@ -1,15 +1,9 @@
-import type { Metadata } from "next";
 import { Container, SectionHeading } from "@/components/ui";
 import { PageHero } from "@/components/PageHero";
+import { Seo } from "@/components/Seo";
 import { Icon } from "@/components/Icon";
 import { CtaBand } from "@/components/sections";
 import type { IconName } from "@/lib/data";
-
-export const metadata: Metadata = {
-  title: "Sustainability",
-  description:
-    "Energy efficiency is designed into every Vactera system. Our approach to compressed-air savings, circularity and measurable impact.",
-};
 
 const pillars: { icon: IconName; title: string; detail: string }[] = [
   {
@@ -48,6 +42,10 @@ const metrics = [
 export default function SustainabilityPage() {
   return (
     <>
+      <Seo
+        title="Sustainability"
+        description="Energy efficiency is designed into every Vactera system. Our approach to compressed-air savings, circularity and measurable impact."
+      />
       <PageHero
         image="sustainability"
         eyebrow="Sustainability"

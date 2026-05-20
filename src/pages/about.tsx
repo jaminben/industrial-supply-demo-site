@@ -1,15 +1,10 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { Container, SectionHeading, Eyebrow } from "@/components/ui";
+import { Seo } from "@/components/Seo";
 import { Icon } from "@/components/Icon";
 import { CtaBand } from "@/components/sections";
 import { company, stats } from "@/lib/data";
 import { img } from "@/lib/images";
-
-export const metadata: Metadata = {
-  title: "About",
-  description: `${company.name} has spent five decades engineering energy-efficient vacuum automation.`,
-};
 
 const timeline = [
   { year: "1972", text: "Founded in Cleveland as a vacuum-pump workshop for the regional steel industry." },
@@ -28,6 +23,10 @@ const values = [
 export default function AboutPage() {
   return (
     <>
+      <Seo
+        title="About"
+        description={`${company.name} has spent five decades engineering energy-efficient vacuum automation.`}
+      />
       <section className="relative isolate overflow-hidden bg-ink text-white">
         <Image src={img.aboutPlant} alt="" fill priority sizes="100vw" className="object-cover opacity-20" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/90 to-ink/50" />

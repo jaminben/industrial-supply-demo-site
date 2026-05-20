@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from "react";
 
 // Olark live-chat bootstrap. We inject Olark's exact official snippet as a real

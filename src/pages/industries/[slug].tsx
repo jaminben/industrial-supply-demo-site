@@ -1,40 +1,30 @@
-import type { Metadata } from "next";
+import type { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { Container } from "@/components/ui";
 import { PageHero } from "@/components/PageHero";
+import { Seo } from "@/components/Seo";
 import { Icon } from "@/components/Icon";
 import { CtaBand } from "@/components/sections";
 import { industries, getIndustry, getProduct } from "@/lib/data";
 
-export function generateStaticParams() {
-  return industries.map((i) => ({ slug: i.slug }));
-}
+export const getStaticPaths: GetStaticPaths = () => ({
+  paths: industries.map((i) => ({ params: { slug: i.slug } })),
+  fallback: false,
+});
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const industry = getIndustry(slug);
-  if (!industry) return { title: "Industry not found" };
-  return { title: industry.name, description: industry.blurb };
-}
+export const getStaticProps: GetStaticProps<{ slug: string }> = ({ params }) => {
+  const slug = params?.slug as string;
+  if (!getIndustry(slug)) return { notFound: true };
+  return { props: { slug } };
+};
 
-export default async function IndustryDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const industry = getIndustry(slug);
-  if (!industry) notFound();
-
+export default function IndustryDetailPage({ slug }: { slug: string }) {
+  const industry = getIndustry(slug)!;
   const recommended = industry.recommendedProducts.map(getProduct).filter(Boolean);
 
   return (
     <>
+      <Seo title={industry.name} description={industry.blurb} />
       <PageHero
         image={industry.image}
         eyebrow="Industries"

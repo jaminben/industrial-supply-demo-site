@@ -1,13 +1,8 @@
-import type { Metadata } from "next";
 import { Container, Eyebrow } from "@/components/ui";
+import { Seo } from "@/components/Seo";
 import { Icon } from "@/components/Icon";
 import { ContactForm } from "@/components/ContactForm";
 import { company } from "@/lib/data";
-
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Talk to a Vactera application engineer about your vacuum handling challenge.",
-};
 
 const contactCards = [
   { icon: "mail" as const, label: "Email", value: company.email, href: `mailto:${company.email}` },
@@ -19,6 +14,7 @@ const contactCards = [
 export default function ContactPage() {
   return (
     <>
+      <Seo title="Contact" description="Talk to a Vactera application engineer about your vacuum handling challenge." />
       <section className="relative overflow-hidden bg-ink text-white">
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-600/30 blur-3xl" />

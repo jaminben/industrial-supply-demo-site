@@ -1,14 +1,8 @@
-import type { Metadata } from "next";
 import { Container } from "@/components/ui";
 import { PageHero } from "@/components/PageHero";
+import { Seo } from "@/components/Seo";
 import { ArticleCard, CtaBand } from "@/components/sections";
 import { articles } from "@/lib/insights";
-
-export const metadata: Metadata = {
-  title: "Insights",
-  description:
-    "Practical engineering knowledge on vacuum, gripping, energy efficiency, automation and sustainability from the Vactera team.",
-};
 
 export default function InsightsPage() {
   const [featured, ...rest] = articles;
@@ -16,6 +10,10 @@ export default function InsightsPage() {
 
   return (
     <>
+      <Seo
+        title="Insights"
+        description="Practical engineering knowledge on vacuum, gripping, energy efficiency, automation and sustainability from the Vactera team."
+      />
       <PageHero
         image="insightEnergy"
         eyebrow="Insights"

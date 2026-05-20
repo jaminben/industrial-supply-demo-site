@@ -1,21 +1,19 @@
-import type { Metadata } from "next";
 import { Container, SectionHeading } from "@/components/ui";
 import { PageHero } from "@/components/PageHero";
+import { Seo } from "@/components/Seo";
 import { ProductCard, CtaBand } from "@/components/sections";
 import { Icon } from "@/components/Icon";
 import { products } from "@/lib/data";
-
-export const metadata: Metadata = {
-  title: "Products",
-  description:
-    "Vacuum pumps, suction cups, robotic gripping, conveying, soft grippers, smart vacuum and ergonomic lifting systems.",
-};
 
 export default function ProductsPage() {
   const categories = [...new Set(products.map((p) => p.category))];
 
   return (
     <>
+      <Seo
+        title="Products"
+        description="Vacuum pumps, suction cups, robotic gripping, conveying, soft grippers, smart vacuum and ergonomic lifting systems."
+      />
       <PageHero
         image="vacuumPumps"
         eyebrow="Products"

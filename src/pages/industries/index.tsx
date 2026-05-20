@@ -1,22 +1,20 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui";
 import { PageHero } from "@/components/PageHero";
+import { Seo } from "@/components/Seo";
 import { Icon } from "@/components/Icon";
 import { CtaBand } from "@/components/sections";
 import { industries } from "@/lib/data";
 import { img } from "@/lib/images";
 
-export const metadata: Metadata = {
-  title: "Industries",
-  description:
-    "Application-engineered vacuum handling for automotive, food & beverage, packaging & logistics, pharma, electronics and print.",
-};
-
 export default function IndustriesPage() {
   return (
     <>
+      <Seo
+        title="Industries"
+        description="Application-engineered vacuum handling for automotive, food & beverage, packaging & logistics, pharma, electronics and print."
+      />
       <PageHero
         image="heroFactory"
         eyebrow="Industries"

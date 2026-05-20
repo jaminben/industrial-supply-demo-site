@@ -1,8 +1,6 @@
-"use client";
-
 import Link from "next/link";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 import { Icon } from "./Icon";
 import { Button, Container, Logo } from "./ui";
 
@@ -17,7 +15,7 @@ const nav = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
+  const pathname = useRouter().pathname;
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">

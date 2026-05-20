@@ -1,41 +1,31 @@
-import type { Metadata } from "next";
+import type { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { Container } from "@/components/ui";
+import { Seo } from "@/components/Seo";
 import { Icon } from "@/components/Icon";
 import { ArticleCard, CtaBand, formatDate } from "@/components/sections";
 import { articles, getArticle } from "@/lib/insights";
 import { img } from "@/lib/images";
 
-export function generateStaticParams() {
-  return articles.map((a) => ({ slug: a.slug }));
-}
+export const getStaticPaths: GetStaticPaths = () => ({
+  paths: articles.map((a) => ({ params: { slug: a.slug } })),
+  fallback: false,
+});
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const article = getArticle(slug);
-  if (!article) return { title: "Article not found" };
-  return { title: article.title, description: article.excerpt };
-}
+export const getStaticProps: GetStaticProps<{ slug: string }> = ({ params }) => {
+  const slug = params?.slug as string;
+  if (!getArticle(slug)) return { notFound: true };
+  return { props: { slug } };
+};
 
-export default async function ArticlePage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const article = getArticle(slug);
-  if (!article) notFound();
-
+export default function ArticlePage({ slug }: { slug: string }) {
+  const article = getArticle(slug)!;
   const more = articles.filter((a) => a.slug !== article.slug).slice(0, 3);
 
   return (
     <>
+      <Seo title={article.title} description={article.excerpt} />
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-ink text-white">
         <Image src={img[article.image]} alt="" fill priority sizes="100vw" className="object-cover opacity-25" />
